@@ -76,7 +76,7 @@ const CodeEditor: React.FC<EditorProps> = ({ InitialValue, onChange }) => {
       <Editor
         onMount={DidMount}
         onChange={handleEditorChange}
-        height="90vh"
+        height="100%"
         value={InitialValue}
         defaultLanguage="javascript"
         defaultValue="// () => `Hello World` "
