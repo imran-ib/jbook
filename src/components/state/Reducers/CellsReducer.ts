@@ -2,7 +2,6 @@ import produce from "immer";
 import { ActionType } from "../Actions/Action-types";
 import { Action } from "../Actions";
 import { Cell } from "../cell";
-import { act } from "react-dom/test-utils";
 
 interface CellsState {
   loading: boolean;
@@ -31,7 +30,7 @@ const reducer = produce((state: CellsState = initialState, action: Action) => {
       state.order = state.order.filter((id) => id !== action.payload);
 
       return state;
-    case ActionType.INSERT_CELL_BEFORE:
+    case ActionType.INSERT_CELL_AFTER:
       const cell: Cell = {
         content: "",
         id: RandomId(),
@@ -40,9 +39,9 @@ const reducer = produce((state: CellsState = initialState, action: Action) => {
       state.data[cell.id] = cell;
       const index = state.order.findIndex((id) => id === action.payload.id);
       if (index < 0) {
-        state.order.push(cell.id);
+        state.order.unshift(cell.id);
       } else {
-        state.order.splice(index, 0, cell.id);
+        state.order.splice(index + 1, 0, cell.id);
       }
 
       return state;
