@@ -6,7 +6,7 @@ interface Props {
 }
 
 const ActionBar: React.FC<Props> = ({ id }) => {
-  const { moveCell, deleteCell } = useActions();
+  const { moveCell, deleteCell  } = useActions();
   return (
     <div className="action-bar">
       <button
