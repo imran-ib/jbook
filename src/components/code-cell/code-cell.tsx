@@ -6,7 +6,7 @@ import { Cell } from "../state/cell";
 import { useActions } from "../Hooks/useActions";
 import { useTypedSelector } from "../Hooks/useTypedSelector";
 import "./codeCell.css";
-// start from 19 -> 12
+import { useCumulativeCode } from "../Hooks/useCumulativeCode";
 
 interface Props {
   cell: Cell;
@@ -15,20 +15,21 @@ interface Props {
 const CodeCell: React.FC<Props> = ({ cell }) => {
   const { updateCell, CreateBundle } = useActions();
   const bundle = useTypedSelector((state) => state.bundles[cell.id]);
+  const cumulativeCode = useCumulativeCode(cell.id);
 
   useEffect(() => {
     if (!bundle) {
-      CreateBundle(cell.id, cell.content);
+      CreateBundle(cell.id, cumulativeCode);
       return;
     }
     const timer = setTimeout(async () => {
-      CreateBundle(cell.id, cell.content);
+      CreateBundle(cell.id, cumulativeCode);
     }, 1200);
 
     return () => {
       clearTimeout(timer);
     };
-  }, [cell.content, cell.id, CreateBundle]);
+  }, [cumulativeCode, cell.id, CreateBundle]);
 
   return (
     <Resizable direction="vertical">
